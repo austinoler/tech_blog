@@ -1,5 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+const User = require('./user');
+const Comment = require('./comment');
 
 class Post extends Model {}
 
@@ -29,6 +31,14 @@ Post.init(
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
@@ -39,4 +49,13 @@ Post.init(
   }
 );
 
+Post.belongsTo(User, {
+  foreignKey: 'userId',
+});
+
+Post.hasMany(Comment, {
+  foreignKey: 'postId',
+});
+
 module.exports = Post;
+
