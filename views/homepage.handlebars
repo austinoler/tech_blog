@@ -1,0 +1,17 @@
+{{#extend 'layouts/main'}}
+  {{#content 'main'}}
+    <h1>Welcome to the Tech Blog</h1>
+    {{#if posts.length}}
+      {{#each posts}}
+        <div class="post">
+          <h2>{{title}}</h2>
+          <p>{{createdAt}}</p>
+          <p>{{summary}}</p>
+          <a href="/post/{{id}}">Read More</a>
+        </div>
+      {{/each}}
+    {{else}}
+      <p>No posts available.</p>
+    {{/if}}
+  {{/content}}
+{{/extend}}
