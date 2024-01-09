@@ -1,4 +1,3 @@
-// controllers/postController.js
 const express = require('express');
 const router = express.Router();
 const { Post, User, Comment } = require('../models');
@@ -35,6 +34,5 @@ router.get('/post/:id', async (req, res) => {
   }
 });
 
-// Add other route handlers as needed
 
 module.exports = router;
