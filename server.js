@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // Create Express.js app
 const app = express();
@@ -38,6 +39,18 @@ app.use(express.urlencoded({ extended: true }));
 
 // Set up static directory
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Implement user authentication middleware
+const withAuth = (req, res, next) => {
+  if (!req.session.user_id) {
+    res.redirect('/login');
+  } else {
+    next();
+  }
+};
+
+// Apply authentication middleware to specific routes
+app.use('/dashboard', withAuth);
 
 // Use routes defined in the controllers
 app.use(routes);
